@@ -1,22 +1,22 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 import re
 import sys
 
 from tqdm import tqdm
 
+import fire
 
 # abcd
 # efgh
 # ijkl
 # mnop
 
-def crosswords(lexicon_file_name):
+def crosswords(lexicon_file_name, start_from=0):
     with open(lexicon_file_name, 'r') as lexicon_file:
         lexicon = lexicon_file.read().splitlines()
-    for abcd in tqdm(lexicon[1500:]):
+    for abcd in tqdm(lexicon[start_from:]):
         a, b, c, d = tuple(abcd)
         letters = a + b + c + d
         re_aeim = re.compile(f'{a}[^{abcd}][^{abcd}][^{abcd}]')
@@ -44,4 +44,4 @@ def crosswords(lexicon_file_name):
 
 
 if __name__ == '__main__':
-    crosswords(sys.argv[1])
+    fire.Fire(crosswords)
